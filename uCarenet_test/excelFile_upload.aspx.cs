@@ -46,7 +46,7 @@ namespace uCarenet_test
                     excelFileConnection.Open();
 
                     DataTable dt = excelFileConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string getExcelSheetName = dt.Rows[0]["Table Name"].ToString;
+                    //string getExcelSheetName = dt.Rows[0]["Table Name"].ToString;
 
                     excelFileGridView.DataBind();
                     
