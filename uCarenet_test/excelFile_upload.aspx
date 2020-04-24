@@ -17,7 +17,16 @@
             <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
         <div>
-            <asp:GridView ID="excelFileGridView" runat="server"></asp:GridView>
+            <asp:GridView ID="excelFileGridView" runat="server" OnSelectedIndexChanged="excelFileGridView_SelectedIndexChanged">
+                <Columns>
+                    <asp:TemplateField HeaderText="Row Number">
+                        <ItemTemplate>
+                            <%# Container.DataItemIndex + 1 %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                
+            </asp:GridView>
         </div>
     </form>
 </body>

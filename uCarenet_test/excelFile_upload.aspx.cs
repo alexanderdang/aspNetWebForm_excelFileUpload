@@ -28,7 +28,7 @@ namespace uCarenet_test
             {
                 try
                 {
-                    string[] allowedFileTypes = { ".xls", ".xlsx" };
+                    //string[] allowedFileTypes = { ".xls", ".xlsx" };
                     excelFileUpload.SaveAs(filePath + excelFileUpload.FileName);
                     string fileExtension = System.IO.Path.GetExtension(excelFileUpload.PostedFile.FileName);
 
@@ -46,17 +46,36 @@ namespace uCarenet_test
                     excelFileConnection.Open();
 
                     DataTable dt = excelFileConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    //string getExcelSheetName = dt.Rows[0]["Table Name"].ToString;
 
+                    //Get first sheet's name
+                    string getExcelSheetName = dt.Rows[0]["Table Name"].ToString();
+
+                    //Object representing SQL select statement to execute against data source
+                    OleDbCommand excelCommand = new OleDbCommand(@"SELECT * FROM [" + getExcelSheetName + @"]", excelFileConnection);
+
+                    //Data command used to fill DataSet
+                    OleDbDataAdapter excelAdapter = new OleDbDataAdapter(excelCommand);
+
+                    //Instantiate new DataSet
+                    DataSet uploadFileDataSet = new DataSet();
+
+                    //Utilize data command object's fill method to add data into DataSet
+                    excelAdapter.Fill(uploadFileDataSet);
+                    excelFileConnection.Close();
+
+                    //set object where gridview will retrieve data
+                    excelFileGridView.DataSource = uploadFileDataSet;
                     excelFileGridView.DataBind();
                     
 
                 } catch (Exception error)
                 {
-                    lblMessage.Text = error.Message;
+                    lblMessage.Text = "Upload error occured: " + error.Message;
                 }
 
             }
         }
+
+        
     }
 }
