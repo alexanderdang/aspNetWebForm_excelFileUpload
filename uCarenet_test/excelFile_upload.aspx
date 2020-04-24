@@ -17,7 +17,7 @@
             <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
         <div>
-            <asp:GridView ID="excelFileGridView" runat="server" OnSelectedIndexChanged="excelFileGridView_SelectedIndexChanged">
+            <asp:GridView ID="excelFileGridView" runat="server">
                 <Columns>
                     <asp:TemplateField HeaderText="Row Number">
                         <ItemTemplate>
